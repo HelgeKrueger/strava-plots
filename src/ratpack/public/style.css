@@ -11,3 +11,10 @@ body {
     stroke: #000;
     shape-rendering: crispEdges;
 }
+
+.tooltip {
+    font-size: 12px;
+    position: absolute; right: 200px; top: 20px;    
+    width: 200px;
+    height: 200px;
+}

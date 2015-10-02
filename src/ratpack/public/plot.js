@@ -38,10 +38,14 @@ var GraphBuilder = function () {
                 addSvgToBody: function() {
                     var svg = d3.select('body')
                         .append('svg')
-                            .attr('width', width + 100)
+                            .attr('width', width + 300)
                             .attr('height', height + 100)
                         .append('g')
                             .attr('transform', 'translate(40, 40)');
+                    svg.append('text')
+                        .attr('cx', width + 100)
+                        .attr('cy', 100)
+                        .attr('class', 'rect');
                     return svg;
                 },
                 addAxes: function (svg) {
@@ -66,7 +70,12 @@ var GraphBuilder = function () {
                         .attr('r', 2)
                         .attr('cx', xMap)
                         .attr('cy', yMap)
-                        .on('mouseover', function(d) { console.log(d); });
+                        .on('mouseover', function(d) {
+                            var text = 'name: <a href="https://www.strava.com/activities/' + d.id + '">' + d.name + '</a><br/>';
+                            text += 'distance: ' + d.distance/1000 + ' km<br/>';
+                            text += 'moving time: ' + d3.time.format("%H:%M")(new Date(d.movingTime * 1000)) + '<br/>';
+                            document.getElementById('tooltip').innerHTML = text;
+                        });
                 },
                 configureDomain: function(rides, runs) {
                     xScale.domain([
