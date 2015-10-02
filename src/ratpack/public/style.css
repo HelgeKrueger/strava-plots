@@ -1,0 +1,13 @@
+body {
+    font: 10px sans-serif;
+}
+
+.ride { fill: red }
+.run { fill: blue }
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
