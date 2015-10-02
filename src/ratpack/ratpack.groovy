@@ -7,7 +7,6 @@ import ratpack.session.Session
 import ratpack.session.SessionModule
 
 def config = new ConfigSlurper().parse(new File('config.groovy').toURL())
-
 def authProvider = new AuthProvider(
     clientId: config.clientId,
     clientSecret: config.clientSecret,

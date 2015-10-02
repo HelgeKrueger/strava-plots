@@ -24,6 +24,10 @@ dependencies {
     runtime 'org.slf4j:slf4j-simple:1.7.10'
 }
 
+applicationDistribution.from('config.groovy') {
+    into 'app'
+}
+
 task stage {
       dependsOn installDist
 }
