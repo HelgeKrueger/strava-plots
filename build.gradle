@@ -50,7 +50,7 @@ task javaScriptDependencies << {
     }
 }
 
-[run, installDist]*.dependsOn javaScriptDependencies
+processResources.dependsOn javaScriptDependencies
 
 applicationDistribution.from('config.groovy') {
     into 'app'
