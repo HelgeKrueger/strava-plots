@@ -78,14 +78,8 @@ var GraphBuilder = function () {
                         });
                 },
                 configureDomain: function(rides, runs) {
-                    xScale.domain([
-                        d3.min([d3.min(runs, xValue), d3.min(rides, xValue)]),
-                        d3.max([d3.max(runs, xValue), d3.max(rides, xValue)]),
-                    ]); 
-                    yScale.domain([
-                        d3.min([d3.min(runs, yValue), d3.min(rides, yValue)]),
-                        d3.max([d3.max(runs, yValue), d3.max(rides, yValue)]),
-                    ]); 
+                    xScale.domain([minOfSets([runs, rides], xValue), maxOfSets([runs, rides], xValue)]);
+                    yScale.domain([minOfSets([runs, rides], yValue), maxOfSets([runs, rides], yValue)]);
                 }
             };
         }
