@@ -30,6 +30,7 @@ dependencies {
 
 task javaScriptDependencies << {
     def javaScriptLibDirectory = 'src/ratpack/public/js/lib'
+    new File(javaScriptLibDirectory).mkdirs()
     fileTree(dir: javaScriptLibDirectory).each{ delete it }
     download {
         src 'http://momentjs.com/downloads/moment.js'
