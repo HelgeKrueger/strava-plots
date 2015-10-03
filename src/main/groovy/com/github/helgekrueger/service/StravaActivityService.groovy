@@ -4,16 +4,17 @@ import com.github.helgekrueger.stravagroovy.StravaClient
 
 class StravaActivityService {
 
-    def accessToken
+    def stravaClient
 
     def retrieveData() {
-        def client = new StravaClient(accessToken: accessToken)
-        def activities = client.listActivities().collect{ [
-            movingTime: it.moving_time,
-            distance: it.distance,
-            type: it.type,
+        def activities = stravaClient.listActivities().collect{ [
             id: it.id,
             name: it.name,
+            type: it.type,
+            movingTime: it.moving_time,
+            distance: it.distance,
+            averageHeartrate: it.average_heartrate,
+            averageSpeed: it.average_speed,
         ]}
         def rides = activities.findAll{ it.type == 'Ride' }
         def runs = activities.findAll{ it.type == 'Run' }

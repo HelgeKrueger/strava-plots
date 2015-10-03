@@ -71,10 +71,15 @@ var GraphBuilder = function () {
                         .attr('cx', xMap)
                         .attr('cy', yMap)
                         .on('mouseover', function(d) {
-                            var text = 'name: <a href="https://www.strava.com/activities/' + d.id + '">' + d.name + '</a><br/>';
-                            text += 'distance: ' + d.distance/1000 + ' km<br/>';
-                            text += 'moving time: ' + secondsToFormatHourMinute(d.movingTime) + '<br/>';
-                            document.getElementById('tooltip').innerHTML = text;
+                            var template = Handlebars.compile(document.getElementById('tooltip-template').innerHTML);
+                            document.getElementById('tooltip').innerHTML = template({
+                                id: d.id,
+                                name: d.name,
+                                distance: metersToKilometers(d.distance),
+                                movingTime: secondsToFormatHourMinute(d.movingTime),
+                                averageSpeed: d.averageSpeed,
+                                averageHeartrate: d.averageHeartrate,
+                            });
                         });
                 },
                 configureDomain: function(rides, runs) {

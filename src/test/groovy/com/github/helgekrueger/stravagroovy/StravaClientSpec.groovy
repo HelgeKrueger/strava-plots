@@ -1,14 +1,14 @@
 package com.github.helgekrueger.stravagroovy
 
+import spock.lang.Ignore
 import spock.lang.Specification
 
 class StravaClientSpec extends Specification {
 
+    @Ignore
     def 'list activities'() {
         setup:
-        def client = new StravaClient(
-            accessToken: 'ac7fa303d8175f19525c6c5b1fef5efd186c42c7'
-        )
+        def client = new StravaClient()
 
         expect:
         client.listActivities()

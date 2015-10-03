@@ -1,6 +1,7 @@
 import static ratpack.groovy.Groovy.ratpack
 
 import com.github.helgekrueger.stravagroovy.AuthProvider
+import com.github.helgekrueger.stravagroovy.StravaClient
 import com.github.helgekrueger.service.StravaActivityService
 import groovy.json.JsonOutput
 import ratpack.session.Session
@@ -48,7 +49,7 @@ ratpack {
             session.require('strava_access_token').onError{
                 redirect 'auth'
             }.then{ accessToken ->
-                def service = new StravaActivityService(accessToken: accessToken)
+                def service = new StravaActivityService(stravaClient: new StravaClient(accessToken: accessToken))
                 render JsonOutput.toJson(service.retrieveData())
             }
         }

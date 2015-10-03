@@ -43,6 +43,10 @@ task javaScriptDependencies << {
         from zipTree(file("$javaScriptLibDirectory/d3.zip"))
         into javaScriptLibDirectory
     }
+    download {
+        src 'http://builds.handlebarsjs.com.s3.amazonaws.com/handlebars-v4.0.2.js'
+        dest "$javaScriptLibDirectory/handlebars.js"
+    }
 }
 
 [run, installDist]*.dependsOn javaScriptDependencies
