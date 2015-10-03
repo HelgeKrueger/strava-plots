@@ -3,6 +3,8 @@
     <head>
         <meta charset="utf-8">
         <script src="d3.min.js" type="text/javascript"></script>
+        <script src="js/lib/moment.js" type="text/javascript"></script>
+        <script src="js/util.js" type="text/javascript"></script>
         <script src="plot.js" type="text/javascript"></script>
         <link rel="stylesheet" type="text/css" href="style.css"/>
     </head>
@@ -13,7 +15,7 @@
                 .withXValue(function (d) { return d.distance; })
                 .withYValue(function (d) { return d.movingTime; })
                 .withXTickFormat(function(n) { return n / 1000; })
-                .withYTickFormat(function(t) { return d3.time.format('%H:%M')(new Date(t * 1000)); })
+                .withYTickFormat(function(t) { return secondsToFormatHourMinute(t); })
                 .build();
             var svg = graph.addSvgToBody();
             d3.json('/data', function(error, json) {

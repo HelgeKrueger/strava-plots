@@ -73,7 +73,7 @@ var GraphBuilder = function () {
                         .on('mouseover', function(d) {
                             var text = 'name: <a href="https://www.strava.com/activities/' + d.id + '">' + d.name + '</a><br/>';
                             text += 'distance: ' + d.distance/1000 + ' km<br/>';
-                            text += 'moving time: ' + d3.time.format("%H:%M")(new Date(d.movingTime * 1000)) + '<br/>';
+                            text += 'moving time: ' + secondsToFormatHourMinute(d.movingTime) + '<br/>';
                             document.getElementById('tooltip').innerHTML = text;
                         });
                 },
