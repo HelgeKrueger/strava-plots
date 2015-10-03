@@ -4,10 +4,12 @@ buildscript {
     }
     dependencies {
         classpath "io.ratpack:ratpack-gradle:1.0.0"
+        classpath 'de.undercouch:gradle-download-task:2.0.0'
     }
 }
 
 apply plugin: "io.ratpack.ratpack-groovy"
+apply plugin: 'de.undercouch.download'
 
 repositories {
     jcenter()
@@ -20,9 +22,30 @@ dependencies {
     compile 'oauth.signpost:signpost-commonshttp4:1.2.1.2'
     compile 'org.codehaus.groovy:groovy-all:2.4.5'
     compile 'org.codehaus.groovy.modules.http-builder:http-builder:0.7'
-    testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
     runtime 'org.slf4j:slf4j-simple:1.7.10'
+
+    testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
+    testRuntime 'cglib:cglib:3.1'
 }
+
+task javaScriptDependencies << {
+    def javaScriptLibDirectory = 'src/ratpack/public/js/lib'
+    fileTree(dir: javaScriptLibDirectory).each{ delete it }
+    download {
+        src 'http://momentjs.com/downloads/moment.js'
+        dest javaScriptLibDirectory
+    }
+    download {
+        src 'https://github.com/mbostock/d3/releases/download/v3.5.6/d3.zip'
+        dest javaScriptLibDirectory
+    }
+    copy {
+        from zipTree(file("$javaScriptLibDirectory/d3.zip"))
+        into javaScriptLibDirectory
+    }
+}
+
+[run, installDist]*.dependsOn javaScriptDependencies
 
 applicationDistribution.from('config.groovy') {
     into 'app'
