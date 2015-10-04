@@ -7,19 +7,19 @@ import spock.lang.Specification
 class StravaClientSpec extends Specification {
 
     def accessToken = System.getenv('STRAVA_ACCESS_TOKEN')
+    def client = new StravaClient(accessToken: accessToken)
 
     def 'list activities'() {
-        setup:
-        def client = new StravaClient(accessToken: accessToken)
-
         expect:
         client.listActivities().size() > 0
     }
 
-    def 'get athlete'() {
-        setup:
-        def client = new StravaClient(accessToken: accessToken)
+    def 'list friend activities'() {
+        expect:
+        client.listFriendsActivities().size() > 0
+    }
 
+    def 'get athlete'() {
         when:
         def athlete = client.getAthlete()
 
@@ -29,9 +29,6 @@ class StravaClientSpec extends Specification {
     }
 
     def 'get stats'() {
-        setup:
-        def client = new StravaClient(accessToken: accessToken)
-
         when:
         def stats = client.getStats()
 

@@ -17,6 +17,13 @@ class StravaClient {
         }
     }
 
+    def listFriendsActivities(params = [:]) {
+        queryStrava {
+            uri.path = '/api/v3/activities/following'
+            uri.query = [per_page: 200] + params
+        }
+    }
+
     def getAthlete() {
         queryStrava {
             uri.path = '/api/v3/athlete'

@@ -14,7 +14,6 @@ def authProvider = new AuthProvider(
     redirectUrl: config.host + 'withCode'
 )
 
-
 ratpack {
     bindings {
         module SessionModule
