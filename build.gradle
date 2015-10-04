@@ -28,25 +28,33 @@ dependencies {
     testRuntime 'cglib:cglib:3.1'
 }
 
-task javaScriptDependencies << {
+task javaScriptDependencies {
     def javaScriptLibDirectory = 'src/ratpack/public/js/lib'
-    new File(javaScriptLibDirectory).mkdirs()
-    fileTree(dir: javaScriptLibDirectory).each{ delete it }
-    download {
-        src 'http://momentjs.com/downloads/moment.js'
-        dest javaScriptLibDirectory
+    def libraries = ['moment.js', 'd3.min.js', 'handlebars.js']
+
+    onlyIf {
+        libraries.any{ !new File("$javaScriptLibDirectory/$it").exists() }
     }
-    download {
-        src 'https://github.com/mbostock/d3/releases/download/v3.5.6/d3.zip'
-        dest javaScriptLibDirectory
-    }
-    copy {
-        from zipTree(file("$javaScriptLibDirectory/d3.zip"))
-        into javaScriptLibDirectory
-    }
-    download {
-        src 'http://builds.handlebarsjs.com.s3.amazonaws.com/handlebars-v4.0.2.js'
-        dest "$javaScriptLibDirectory/handlebars.js"
+
+    doLast {
+        new File(javaScriptLibDirectory).mkdirs()
+        fileTree(dir: javaScriptLibDirectory).each{ delete it }
+        download {
+            src 'http://momentjs.com/downloads/moment.js'
+            dest javaScriptLibDirectory
+        }
+        download {
+            src 'https://github.com/mbostock/d3/releases/download/v3.5.6/d3.zip'
+            dest javaScriptLibDirectory
+        }
+        copy {
+            from zipTree(file("$javaScriptLibDirectory/d3.zip"))
+            into javaScriptLibDirectory
+        }
+        download {
+            src 'http://builds.handlebarsjs.com.s3.amazonaws.com/handlebars-v4.0.2.js'
+            dest "$javaScriptLibDirectory/handlebars.js"
+        }
     }
 }
 
