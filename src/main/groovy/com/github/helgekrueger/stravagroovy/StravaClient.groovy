@@ -10,10 +10,10 @@ class StravaClient {
     def client = new HTTPBuilder('https://www.strava.com/')
     def accessToken
 
-    def listActivities() {
+    def listActivities(params = [:]) {
         queryStrava {
             uri.path = '/api/v3/athlete/activities'
-            uri.query = [per_page: 200]
+            uri.query = [per_page: 200] + params
         }
     }
 

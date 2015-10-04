@@ -7,7 +7,7 @@ class StravaActivityService {
     def stravaClient
 
     def retrieveData() {
-        def activities = stravaClient.listActivities().collect{ [
+        def activities = getAllActivities().collect{ [
             id: it.id,
             name: it.name,
             type: it.type,
@@ -24,5 +24,15 @@ class StravaActivityService {
             rides: rides,
             runs: runs,
         ]
+    }
+
+    private getAllActivities() {
+        def page_count = Math.floor(getTotalActivityCount() / 200) + 1
+        (1..page_count).collect{ stravaClient.listActivities(page: it) }.flatten()
+    }
+
+    def getTotalActivityCount() {
+        def stats = stravaClient.getStats()
+        stats.all_ride_totals.count + stats.all_run_totals.count
     }
 }

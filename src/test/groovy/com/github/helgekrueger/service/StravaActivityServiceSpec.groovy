@@ -5,17 +5,15 @@ import spock.lang.Specification
 
 class StravaActivityServiceSpec extends Specification {
 
-    def service = new StravaActivityService()
+    def service = new StravaActivityService(stravaClient: Mock(StravaClient))
 
     def 'retrieveData - empty dataset returns empty'() {
-        setup:
-        service.stravaClient = Mock(StravaClient)
-
         when:
         def result = service.retrieveData()
 
         then:
-        1 * service.stravaClient.listActivities() >> []
+        1 * service.stravaClient.getStats(_) >> [ all_ride_totals: [ count: 42, ], all_run_totals: [ count: 58, ] ]
+        1 * service.stravaClient.listActivities(_) >> []
 
         result.rides == []
         result.runs == []
@@ -31,13 +29,13 @@ class StravaActivityServiceSpec extends Specification {
         def averageSpeed = 30
         def polyline = 'this is a line'
 
-        service.stravaClient = Mock(StravaClient)
-
         when:
         def result = service.retrieveData()
 
+
         then:
-        1 * service.stravaClient.listActivities() >> [
+        1 * service.stravaClient.getStats(_) >> [ all_ride_totals: [ count: 42, ], all_run_totals: [ count: 58, ] ]
+        1 * service.stravaClient.listActivities(_) >> [
             [
                 moving_time: movingTime,
                 distance: distance,
@@ -61,5 +59,15 @@ class StravaActivityServiceSpec extends Specification {
         result.rides[0].averageHeartrate == averageHeartrate
         result.rides[0].averageSpeed == averageSpeed
         result.rides[0].polyline == polyline
+    }
+
+    def 'getTotalActivityCount'() {
+        when:
+        def count = service.getTotalActivityCount()
+
+        then:
+        1 * service.stravaClient.getStats(_) >> [ all_ride_totals: [ count: 42, ], all_run_totals: [ count: 58, ] ]
+
+        count == 100
     }
 }
