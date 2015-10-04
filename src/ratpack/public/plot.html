@@ -21,8 +21,11 @@
                 <dt>Average Heartrate</dt><dd>{{averageHeartrate}}</dd></dt>
             </dl>
         </script>
-        <div id="tooltip" class="tooltip"></div>
-        <div id="map" class="map"></div>
+        <div id="tooltip" class="info-box tooltip"></div>
+        <div id="map" class="info-box map"></div>
+        <div class="info-box footer">
+            Source code is available on <a href="https://github.com/HelgeKrueger/strava-plots">Github</a>.
+        </div>
         <script type="text/javascript">
             var graph = new GraphBuilder()
                 .withDimensions(800, 500)
