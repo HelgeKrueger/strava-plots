@@ -2,3 +2,4 @@
 build/
 *.swp
 src/ratpack/public/js/lib
+src/test/javascript/lib

@@ -58,7 +58,25 @@ task javaScriptDependencies {
         copy {
             from zipTree(file("$javaScriptLibDirectory/d3.zip"))
             into javaScriptLibDirectory
+            include 'd3.min.js'
         }
+    }
+}
+
+task testJavaScriptDownloads {
+    def testJavaScriptDirectory = 'src/test/javascript'
+
+    doLast {
+        download {
+            src 'https://github.com/jasmine/jasmine/releases/download/v2.3.4/jasmine-standalone-2.3.4.zip'
+            dest "$testJavaScriptDirectory/jasmine.zip"
+        }
+        copy {
+            from zipTree(file("$testJavaScriptDirectory/jasmine.zip"))
+            into testJavaScriptDirectory
+            include 'lib/**'
+        }
+        delete "$testJavaScriptDirectory/jasmine.zip"
     }
 }
 
