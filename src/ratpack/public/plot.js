@@ -71,16 +71,17 @@ var GraphBuilder = function () {
                         .attr('cx', xMap)
                         .attr('cy', yMap)
                         .on('mouseover', function(d) {
-                            var template = Handlebars.compile(document.getElementById('tooltip-template').innerHTML);
-                            document.getElementById('tooltip').innerHTML = template({
+                            var template = Handlebars.compile($('#tooltip-template').html());
+                            var newContent = $(template({
                                 id: d.id,
                                 name: d.name,
                                 distance: metersToKilometers(d.distance),
                                 movingTime: secondsToFormatHourMinute(d.movingTime),
                                 averageSpeed: d.averageSpeed,
                                 averageHeartrate: d.averageHeartrate,
-                            });
-                            addPathToElementAsMap(document.getElementById('map'), d.polyline);
+                            }))
+                            $('#tooltip').html(newContent);
+                            addPathToElementAsMap($('#map').get(0), d.polyline);
                         });
                 },
                 configureDomain: function(rides, runs) {

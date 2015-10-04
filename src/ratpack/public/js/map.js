@@ -10,7 +10,7 @@ var getBoundingBoxForPath = function(path) {
 var addPathToElementAsMap = function(element, encodedPath) {
     var decodedPath = google.maps.geometry.encoding.decodePath(encodedPath);
 
-    var map = new google.maps.Map(document.getElementById("map"), { mapTypeId: google.maps.MapTypeId.TERRAIN });
+    var map = new google.maps.Map(element, { mapTypeId: google.maps.MapTypeId.TERRAIN });
     map.fitBounds(getBoundingBoxForPath(decodedPath));
 
     var setRegion = new google.maps.Polyline({
