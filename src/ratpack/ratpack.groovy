@@ -26,11 +26,15 @@ ratpack {
         }
 
         get { Session session ->
-            session.require('strava_access_token').onError{
-                redirect 'auth'
-            }.then{ accessToken ->
+            if (config.accessToken) {
                 redirect 'plot.html'
-            }        
+            } else {
+                session.require('strava_access_token').onError{
+                    redirect 'auth'
+                }.then{ accessToken ->
+                    redirect 'plot.html'
+                }        
+            }
         }
 
         get('auth') {
@@ -46,11 +50,16 @@ ratpack {
         }
 
         get('data') { Session session ->
-            session.require('strava_access_token').onError{
-                redirect 'auth'
-            }.then{ accessToken ->
-                def service = new StravaActivityService(stravaClient: new StravaClient(accessToken: accessToken))
+            if (config.accessToken) {
+                def service = new StravaActivityService(stravaClient: new StravaClient(accessToken: config.accessToken))
                 render JsonOutput.toJson(service.retrieveData())
+            } else {
+                session.require('strava_access_token').onError{
+                    redirect 'auth'
+                }.then{ accessToken ->
+                    def service = new StravaActivityService(stravaClient: new StravaClient(accessToken: accessToken))
+                    render JsonOutput.toJson(service.retrieveData())
+                }
             }
         }
     }

@@ -80,6 +80,7 @@ var GraphBuilder = function () {
                                 averageSpeed: d.averageSpeed,
                                 averageHeartrate: d.averageHeartrate,
                             });
+                            addPathToElementAsMap(document.getElementById('map'), d.polyline);
                         });
                 },
                 configureDomain: function(rides, runs) {

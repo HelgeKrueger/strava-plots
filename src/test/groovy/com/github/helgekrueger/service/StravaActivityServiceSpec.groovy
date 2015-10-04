@@ -29,6 +29,7 @@ class StravaActivityServiceSpec extends Specification {
         def name = 'this is a pipe'
         def averageHeartrate = 60
         def averageSpeed = 30
+        def polyline = 'this is a line'
 
         service.stravaClient = Mock(StravaClient)
 
@@ -45,6 +46,9 @@ class StravaActivityServiceSpec extends Specification {
                 name: name,
                 average_heartrate: averageHeartrate,
                 average_speed: averageSpeed,
+                map: [
+                    summary_polyline: polyline,
+                ],
             ]
         ]
 
@@ -56,5 +60,6 @@ class StravaActivityServiceSpec extends Specification {
         result.rides[0].name == name
         result.rides[0].averageHeartrate == averageHeartrate
         result.rides[0].averageSpeed == averageSpeed
+        result.rides[0].polyline == polyline
     }
 }

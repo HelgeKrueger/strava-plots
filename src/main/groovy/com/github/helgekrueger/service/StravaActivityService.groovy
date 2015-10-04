@@ -15,6 +15,7 @@ class StravaActivityService {
             distance: it.distance,
             averageHeartrate: it.average_heartrate,
             averageSpeed: it.average_speed,
+            polyline: it.map.summary_polyline,
         ]}
         def rides = activities.findAll{ it.type == 'Ride' }
         def runs = activities.findAll{ it.type == 'Run' }
