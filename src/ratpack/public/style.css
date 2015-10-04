@@ -26,6 +26,10 @@ body {
 .map { top: 180px; height: 300px; }
 .footer { bottom: 20px; }
 
+.choices {
+    position: absolute; left: 20px; bottom: 20px;
+}
+
 dl {
     width: 100%;
     overflow: hidden;

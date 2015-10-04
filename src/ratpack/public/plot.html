@@ -27,20 +27,19 @@
         <div class="info-box footer">
             Source code is available on <a href="https://github.com/HelgeKrueger/strava-plots">Github</a>.
         </div>
+        <div class="choices">
+            <button onclick="doPlot('distance', 'movingTime', 1, 1)">Rides/Runs distance/movingTime</a><br/>
+            <button onclick="doPlot('distance', 'speed', 1, 0)">Rides distance/speed</a><br/>
+            <button onclick="doPlot('speed', 'heartrate', 1, 0)">Rides speed/heartrate</a><br/>
+            <button onclick="doPlot('distance', 'speed', 0, 1)">Runs distance/speed</a><br/>
+            <button onclick="doPlot('speed', 'heartrate', 0, 1)">Runs speed/heartrate</a><br/>
+        </div>
         <script type="text/javascript">
-            var graph = new GraphBuilder()
-                .withDimensions(800, 500)
-                .withXValue(getValueForKey('distance'))
-                .withYValue(getValueForKey('movingTime'))
-                .withXTickFormat(metersToKilometers)
-                .withYTickFormat(secondsToFormatHourMinute)
-                .build();
-            var svg = graph.addSvgToBody();
-            d3.json('/data', function(error, json) {
-                graph.configureDomain(json.rides, json.runs);
-                graph.addAxes(svg);
-                graph.addData(svg, json.rides, 'ride');
-                graph.addData(svg, json.runs, 'run');
+            var json = null;
+
+            $.getJSON('/data', function(data) {
+                json = data;
+                doPlot('distance', 'movingTime', 1, 1);
             });
         </script>
     </body>

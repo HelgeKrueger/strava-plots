@@ -14,6 +14,13 @@ var metersToKilometers = function(meters) {
     return meters/1000;
 };
 
+var formatSpeed = function(speed) {
+    return speed * 3.6;
+};
+var formatHeartrate = function(h) {
+    return h;
+};
+
 var getValueForKey = function(key) {
     return function(field) {
         return field[key];
