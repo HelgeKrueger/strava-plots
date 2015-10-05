@@ -1,7 +1,7 @@
 var doPlot = function (xAxis, yAxis, rides, runs) {
     if (json) {
         d3.select('svg').remove();
-        var graphBuilder = new GraphBuilder().withDimensions(800, 500);
+        var graphBuilder = new GraphBuilder().withDimensions(900, 500);
 
         switch(xAxis) {
         case 'distance':
@@ -140,7 +140,7 @@ var GraphBuilder = function () {
                         .data(data)
                         .enter()
                         .append('circle')
-                        .attr('class', clazz).attr('r', 2).attr('cx', that.xMap).attr('cy', that.yMap)
+                        .attr('class', clazz).attr('r', 5).attr('cx', that.xMap).attr('cy', that.yMap)
                         .on('mouseover', mouseoverAction);
                 },
                 configureDomain: function(rides, runs) {
