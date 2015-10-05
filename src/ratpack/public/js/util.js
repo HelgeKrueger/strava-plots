@@ -1,25 +1,3 @@
-var secondsToFormatHourMinute = function(seconds) {
-    var m = moment.duration(seconds, 'seconds');
-    var minutes = m.minutes();
-    var hours = Math.floor(m.asHours());
-
-    if(minutes < 10) {
-        return hours + ':0' + minutes;
-    } else {
-        return hours + ':' + minutes;
-    }
-};
-
-var metersToKilometers = function(meters) {
-    return meters/1000;
-};
-
-var formatSpeed = function(speed) {
-    return speed * 3.6;
-};
-var formatHeartrate = function(h) {
-    return h;
-};
 
 var getValueForKey = function(key) {
     return function(field) {
