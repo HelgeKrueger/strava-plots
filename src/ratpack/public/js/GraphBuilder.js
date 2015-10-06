@@ -16,7 +16,7 @@ var GraphBuilder = function () {
             this.xValue = xValue;
             this.xMap = function(d) { return xScale(xValue(d)); }
             this.xAxis = d3.svg.axis().scale(xScale).orient('bottom').tickFormat(xTickFormat);
-            this.xScale = xScale;
+            this.xScale = xScale.clamp(true);
             this.xAxisLabel = label;
             return this;
         },
@@ -31,7 +31,7 @@ var GraphBuilder = function () {
             this.yValue = yValue;
             this.yMap = function(d) { return yScale(yValue(d)); }
             this.yAxis = d3.svg.axis().scale(yScale).orient('left').tickFormat(yTickFormat);
-            this.yScale = yScale;
+            this.yScale = yScale.clamp(true);
             this.yAxisLabel = label;
             return this;
         },
@@ -61,12 +61,11 @@ var GraphBuilder = function () {
                         .append('text').text(that.yAxisLabel);
                 },
                 addData: function (svg, data, clazz) {
-                    that.data = svg.selectAll('.' + clazz)
-                        .data(data)
-                        .enter()
-                        .append('circle')
+                    var updateSelect = svg.selectAll('.' + clazz).data(data);
+                    updateSelect.enter().append('circle')
                         .attr('class', clazz).attr('r', 5).attr('cx', that.xMap).attr('cy', that.yMap)
                         .on('mouseover', that.mouseoverAction);
+                    updateSelect.exit().remove();
                 },
                 addZoom: function (svg) {
                     var zoomListener = d3.behavior.zoom()
