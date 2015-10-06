@@ -27,6 +27,7 @@ class StravaActivityServiceSpec extends Specification {
         def name = 'this is a pipe'
         def averageHeartrate = 60
         def averageSpeed = 30
+        def elevation = 1234567
         def polyline = 'this is a line'
 
         when:
@@ -44,6 +45,7 @@ class StravaActivityServiceSpec extends Specification {
                 name: name,
                 average_heartrate: averageHeartrate,
                 average_speed: averageSpeed,
+                total_elevation_gain: elevation,
                 map: [
                     summary_polyline: polyline,
                 ],
@@ -58,6 +60,7 @@ class StravaActivityServiceSpec extends Specification {
         result.rides[0].name == name
         result.rides[0].averageHeartrate == averageHeartrate
         result.rides[0].averageSpeed == averageSpeed
+        result.rides[0].elevation == elevation
         result.rides[0].polyline == polyline
     }
 

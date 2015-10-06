@@ -10,11 +10,12 @@ class StravaActivityService {
         def activities = getAllActivities().collect{ [
             id: it.id,
             name: it.name,
-            type: it.type,
-            movingTime: it.moving_time,
-            distance: it.distance,
-            averageHeartrate: it.average_heartrate,
-            averageSpeed: it.average_speed,
+            type: it.type ?: '-',
+            movingTime: it.moving_time ?: '-',
+            distance: it.distance ?: '-',
+            averageHeartrate: it.average_heartrate ?: '-',
+            averageSpeed: it.average_speed ?: '-',
+            elevation: it.total_elevation_gain ?: '-',
             polyline: it.map.summary_polyline,
         ]}
         def rides = activities.findAll{ it.type == 'Ride' }

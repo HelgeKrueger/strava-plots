@@ -8,6 +8,7 @@ var MouseOverActions = {
             movingTime: Formatters['movingTime'](d.movingTime),
             averageSpeed: Formatters['speed'](d.averageSpeed),
             averageHeartrate: d.averageHeartrate,
+            elevation: d.elevation,
         }))
         $('#tooltip').html(newContent);
     },
