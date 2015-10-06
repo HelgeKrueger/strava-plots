@@ -6,8 +6,21 @@ body {
     font: 10px sans-serif;
 }
 
-.ride { fill: red; opacity: 0.2; }
-.run { fill: blue; opacity: 0.2; }
+rect.pane {
+    fill: none;
+    pointer-events: all;
+}
+
+.ride {
+    fill: red;
+    pointer-events: all;
+    opacity: 0.2;
+}
+.run {
+    fill: blue;
+    pointer-events: all;
+    opacity: 0.2;
+}
 
 .axis path,
 .axis line {

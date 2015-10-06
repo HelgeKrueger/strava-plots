@@ -44,5 +44,6 @@ var doPlot = function (xAxis, yAxis, rides, runs) {
         if (runs) {
             graph.addData(svg, json.runs, 'run');
         }
+        graph.addZoom(svg);
     }
 };

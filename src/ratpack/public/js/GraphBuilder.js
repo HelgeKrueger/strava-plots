@@ -48,6 +48,10 @@ var GraphBuilder = function () {
                         .append('svg').attr('width', that.width + 300).attr('height', that.height + 100)
                         .append('g').attr('transform', 'translate(40, 40)');
                     svg.append('text').attr('cx', that.width + 100).attr('cy', 100).attr('class', 'rect');
+                    that.rect = svg.append("rect")
+                        .attr("class", "pane")
+                        .attr("width", that.width)
+                        .attr("height", that.height)
                     return svg;
                 },
                 addAxes: function (svg) {
@@ -57,12 +61,25 @@ var GraphBuilder = function () {
                         .append('text').text(that.yAxisLabel);
                 },
                 addData: function (svg, data, clazz) {
-                    svg.selectAll('.' + clazz)
+                    that.data = svg.selectAll('.' + clazz)
                         .data(data)
                         .enter()
                         .append('circle')
                         .attr('class', clazz).attr('r', 5).attr('cx', that.xMap).attr('cy', that.yMap)
                         .on('mouseover', that.mouseoverAction);
+                },
+                addZoom: function (svg) {
+                    var zoomListener = d3.behavior.zoom()
+                          .x(that.xScale)
+                          .y(that.yScale)
+                          .scaleExtent([1, 8])
+                          .on("zoom", function () {
+                              svg.select(".x.axis").call(that.xAxis);
+                              svg.selectAll(".y.axis").call(that.yAxis);
+                              svg.selectAll(".run").attr('cx', that.xMap).attr('cy', that.yMap);
+                              svg.selectAll(".ride").attr('cx', that.xMap).attr('cy', that.yMap);
+                          });
+                    that.rect.call(zoomListener);
                 },
                 configureDomain: function(rides, runs) {
                     that.xScale.domain([minOfSets([runs, rides], that.xValue), maxOfSets([runs, rides], that.xValue)]);
